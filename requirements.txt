@@ -1,0 +1,21 @@
+# Uncomment to enable Azure Monitor OpenTelemetry
+# Ref: aka.ms/functions-azure-monitor-python
+# azure-monitor-opentelemetry
+
+# Azure Functions runtime
+azure-functions
+
+# Azure Storage SDK
+azure-storage-blob
+azure-core
+
+# Microsoft Authentication
+msal
+
+# HTTP requests
+requests
+
+# Data processing
+pandas
+openpyxl  # cần thêm để pandas đọc file Excel
+xlrd # Đọc file excel cũ
