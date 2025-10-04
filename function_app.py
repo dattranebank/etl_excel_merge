@@ -11,9 +11,10 @@ from zoneinfo import ZoneInfo  # Python 3.9+
 app = func.FunctionApp()
 
 
-# Timer Trigger: chạy 07h, 13h, 19h giờ VN
-@app.schedule(schedule="0 0 7,13,19 * * *", arg_name="myTimer", run_on_startup=True)
-def merge_excel_to_csv(myTimer: func.TimerRequest) -> None:
+# HTTP Trigger: gọi thủ công hoặc từ ADF
+@app.function_name(name="merge_excel_to_csv")
+@app.route(route="merge_excel_to_csv", methods=["POST"])
+def merge_excel_to_csv(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("=== Start merging Excel files from 'raw' container ===")
 
     try:
@@ -103,5 +104,8 @@ def merge_excel_to_csv(myTimer: func.TimerRequest) -> None:
                 logging.info(f"✅ Merged CSV uploaded to 'staging/{output_csv_name}'")
                 logging.info(f"✅ Merged Excel uploaded to 'staging/{output_excel_name}'")
 
+        return func.HttpResponse("✅ Merge completed successfully", status_code=200)
+
     except Exception as e:
         logging.error(f"❌ Error during merge: {str(e)}")
+        return func.HttpResponse(f"❌ Error: {str(e)}", status_code=500)
