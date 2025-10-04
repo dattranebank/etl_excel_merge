@@ -12,8 +12,8 @@ app = func.FunctionApp()
 
 
 # HTTP Trigger: gọi thủ công hoặc từ ADF
-@app.function_name(name="merge_excel_to_csv")
-@app.route(route="merge_excel_to_csv", methods=["POST"])
+@app.function_name(name="merge_excel_files")
+@app.route(route="merge_excel_files", methods=["POST"])
 def merge_excel_to_csv(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("=== Start merging Excel files from 'raw' container ===")
 
